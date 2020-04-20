@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".RegisterActivity">
+    tools:context=".LoginActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
-        android:text="Register"
+        android:text="Login"
         android:textAlignment="center"
         android:textSize="20sp" />
     <!--Email input-->
@@ -49,18 +49,18 @@
 
     <!--Register Button-->
     <Button
-        android:id="@+id/btn_register2"
+        android:id="@+id/btn_login2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Login"
         android:background="@color/colorPrimary"
         android:layout_below="@id/til_password"/>
 
     <TextView
-        android:id="@+id/tv_have_an_account"
+        android:id="@+id/tv_not_have_an_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Have an account already? Login!"
+        android:text="No account? Register!"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btn_register2"/>
+        android:layout_below="@id/btn_login2"/>
 </RelativeLayout>
