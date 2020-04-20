@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "506844367264",
+    "firebase_url": "https://social-app-7c30e.firebaseio.com",
+    "project_id": "social-app-7c30e",
+    "storage_bucket": "social-app-7c30e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:506844367264:android:19a0cb82865a2676af7cc5",
+        "android_client_info": {
+          "package_name": "com.nptinker.socialapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "506844367264-4mp1oea5r10sshf6554ducn9d2ipbbp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHmL-E9O8_CTIFzg5Rd_Hfrlgu_bFCAcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "506844367264-4mp1oea5r10sshf6554ducn9d2ipbbp5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
