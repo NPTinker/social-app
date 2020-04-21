@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--Register Button-->
+    <!--Login Button-->
     <Button
         android:id="@+id/btn_login2"
         android:layout_width="match_parent"
@@ -56,10 +56,21 @@
         android:background="@color/colorPrimary"
         android:layout_below="@id/til_password"/>
 
+    <!--Recover password-->
+    <TextView
+        android:id="@+id/tv_password_recover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot password? Recover!"
+        android:layout_below="@id/tv_not_have_an_account"
+        android:paddingVertical="8dp"/>
+
+    <!--Redirect to registration-->
     <TextView
         android:id="@+id/tv_not_have_an_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
         android:text="No account? Register!"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/btn_login2"/>
