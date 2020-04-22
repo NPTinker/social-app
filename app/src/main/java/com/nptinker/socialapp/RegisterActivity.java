@@ -21,6 +21,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -67,6 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else registerUser(email, password);
             }
         });
+
         //if an account already there, change to login
         mTvHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String password) {
-        //progressDialog.show();
         //Create a new createAccount method which takes in an email address and password,
         //validates them and then creates a new user with the createUserWithEmailAndPassword method.
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -94,12 +98,30 @@ public class RegisterActivity extends AppCompatActivity {
                         Log.d(TAG, "start creating user");
                         if (task.isSuccessful()) {
                             // Sign in success, dismiss dialog and start register activity
-                            //progressDialog.dismiss();
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(RegisterActivity.this, "Success Registration",
+
+                            //Get user mail and uid from auth
+                            String email = user.getEmail();
+                            String uid = user.getUid();
+                            //Store user info when registered
+                            HashMap<Object, String> hashMap = new HashMap<>();
+                            hashMap.put("email", email);
+                            hashMap.put("uid", uid);
+                            hashMap.put("name",""); //TODO
+                            hashMap.put("phone",""); //TODO
+                            hashMap.put("image",""); //TODO
+                            //Firebase database instance
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            //Path to store user data
+                            DatabaseReference reference = firebaseDatabase.getReference("Users");
+                            //put data within hashmap in database
+                            reference.child(uid).setValue(hashMap);
+
+
+                            Toast.makeText(RegisterActivity.this, "Successful Registration",
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
+                            startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
                             finish(); //end activity lifecycle
                         } else {
                             // If sign in fails, display a message to the user.
