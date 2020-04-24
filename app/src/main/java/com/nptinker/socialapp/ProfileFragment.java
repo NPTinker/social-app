@@ -338,7 +338,7 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     //image is uploaded to storage -> get url and store in user's database
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while(!uriTask.isSuccessful());
+                        while(!uriTask.isSuccessful()); //have to do this or else it crashes :(
                         Uri downloadUri = uriTask.getResult();
 
                         //check if image is uploaded or not and url is received
