@@ -1,4 +1,4 @@
-package com.nptinker.socialapp;
+package com.nptinker.socialapp.models;
 
 public class ModelUser {
     private String name, email, search, phone, image, cover, uid;

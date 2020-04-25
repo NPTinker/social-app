@@ -34,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
                             ft1.commit();
                             return true;
                         case R.id.nav_users:
-                            actionBar.setTitle("Users");
+                            actionBar.setTitle("User list");
                             UsersFragment fragment2 = new UsersFragment();
                             FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
                             ft2.replace(R.id.content,fragment2,"");
@@ -46,6 +46,13 @@ public class DashboardActivity extends AppCompatActivity {
                             FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
                             ft3.replace(R.id.content,fragment3,"");
                             ft3.commit();
+                            return true;
+                        case R.id.nav_chat:
+                            actionBar.setTitle("Chat");
+                            ChatListFragment fragment4 = new ChatListFragment();
+                            FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
+                            ft4.replace(R.id.content,fragment4,"");
+                            ft4.commit();
                             return true;
                     }
                     return false;
