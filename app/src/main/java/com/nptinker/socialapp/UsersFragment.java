@@ -1,14 +1,23 @@
 package com.nptinker.socialapp;
 
+import android.content.Intent;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,6 +42,8 @@ public class UsersFragment extends Fragment {
     AdapterUser adapterUser;
     List<ModelUser> userList;
 
+    FirebaseAuth firebaseAuth;
+
     public UsersFragment() {
         // Required empty public constructor
     }
@@ -51,6 +62,9 @@ public class UsersFragment extends Fragment {
         //initialize user list
         userList = new ArrayList<>();
         getAllUsers();
+
+        //init firebaseauth
+        firebaseAuth = FirebaseAuth.getInstance();
 
         return view;
     }
@@ -80,6 +94,102 @@ public class UsersFragment extends Fragment {
 
             }
         });
+    }
 
+    private void checkUserStatus(){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user !=null){
+            //mTvProfile.setText(user.getEmail());
+        } else {
+            //move to MainActivity if not logged in
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish();
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true); //show menu option in fragment
+        super.onCreate(savedInstanceState);
+    }
+
+    //Inflate option menu
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        //Searchview
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //called when user press search button
+                //if search query not empty then search
+                if (!TextUtils.isEmpty(query.trim())){
+                    searchUser(query);
+                } else {
+                    //if empty, return all users
+                    getAllUsers();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText.trim())){
+                    searchUser(newText);
+                } else {
+                    //if empty, return all users
+                    getAllUsers();
+                }
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private void searchUser(final String query) {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //get all item name "Users" from db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                    //all searched users except current signin user
+                    if (!modelUser.getUid().equals(firebaseUser.getUid())){
+
+                        if (modelUser.getName().toLowerCase().contains(query.toLowerCase())
+                                || modelUser.getEmail().toLowerCase().contains(query.toLowerCase())){
+
+                            userList.add(modelUser);
+                        }
+                    }
+                    //adapter
+                    adapterUser = new AdapterUser(getActivity(),userList);
+                    //refresh adapter
+                    adapterUser.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapterUser);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_logout){
+            firebaseAuth.signOut();
+            checkUserStatus();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
