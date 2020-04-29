@@ -108,10 +108,12 @@ public class RegisterActivity extends AppCompatActivity {
                             HashMap<Object, String> hashMap = new HashMap<>();
                             hashMap.put("email", email);
                             hashMap.put("uid", uid);
-                            hashMap.put("name",""); //TODO
-                            hashMap.put("phone",""); //TODO
-                            hashMap.put("image",""); //TODO
-                            hashMap.put("cover",""); //TODO
+                            hashMap.put("name","");
+                            hashMap.put("phone","");
+                            hashMap.put("image","");
+                            hashMap.put("cover","");
+                            hashMap.put("onlineStatus","online");
+
                             //Firebase database instance
                             FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                             //Path to store user data

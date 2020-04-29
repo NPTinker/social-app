@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +32,10 @@ import com.nptinker.socialapp.models.ModelChat;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatActivity extends AppCompatActivity {
     private Toolbar mToolbar;
@@ -99,6 +102,18 @@ public class ChatActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()){
                     String name ="" + ds.child("name").getValue();
                     hisImage ="" + ds.child("image").getValue();
+                    //get value of onlineStatus
+                    String onlineStatus = "" + ds.child("onlineStatus").getValue();
+
+                    if (onlineStatus.equals("online")) {
+                        mTvUserStatus.setText(onlineStatus);
+                    } else {
+                        //convert timestamp
+                        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+                        calendar.setTimeInMillis(Long.parseLong(onlineStatus));
+                        String dateTime = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+                        mTvUserStatus.setText("Last seen: " + dateTime);
+                    }
 
                     mTvName.setText(name);
                     try{
@@ -199,6 +214,22 @@ public class ChatActivity extends AppCompatActivity {
         mEtMessage.setText("");
     }
 
+    //check user's online status
+    private void checkOnlineStatus (String status) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(myUid);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("onlineStatus", status);
+        databaseReference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onStart() {
+        checkUserStatus();
+        checkOnlineStatus("online");
+        super.onStart();
+    }
+
+    //check if signed in or not
     private void checkUserStatus(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user !=null){
@@ -232,6 +263,14 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        checkOnlineStatus(timestamp);
         userRefForSeen.removeEventListener(seenListener);
+    }
+
+    @Override
+    protected void onResume() {
+        checkOnlineStatus("online");
+        super.onResume();
     }
 }
