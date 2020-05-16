@@ -306,7 +306,7 @@ public class ProfileFragment extends Fragment {
             case STORAGE_REQUEST_CODE: {
                 //pick from storage, first check if storage permission allowed or not
                 if (grantResults.length >0) {
-                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     if (writeStorageAccepted) pickFromGallery();
                     else Toast.makeText(getActivity(), "Please enable storage permissions",
                             Toast.LENGTH_SHORT).show();
