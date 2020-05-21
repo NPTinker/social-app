@@ -23,6 +23,7 @@
 
             </ImageView>
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="90dp"
@@ -65,6 +66,15 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <!--User post-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_post"
+                android:layout_below="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
 
     </ScrollView>
