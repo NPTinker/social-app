@@ -32,6 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nptinker.socialapp.AddPostActivity;
 import com.nptinker.socialapp.R;
 import com.nptinker.socialapp.TheirProfileActivity;
 import com.nptinker.socialapp.models.ModelPost;
@@ -151,6 +152,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         if (uid.equals(myUid)) {
             popupMenu.getMenu().add(Menu.NONE, 0, 0, "Delete");
+            popupMenu.getMenu().add(Menu.NONE, 1, 0, "Edit");
         }
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -158,7 +160,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == 0) {
+                    //delete
                     beginDelete(pId,pImage);
+                } else if (id == 1){
+                    //edit
+                    Intent intent = new Intent(context, AddPostActivity.class);
+                    intent.putExtra("key","editPost");
+                    intent.putExtra("editPostId", pId);
+                    context.startActivity(intent);
                 }
                 return false;
             }

@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,8 +16,13 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class DashboardActivity extends AppCompatActivity {
+
+    private String mUID;
 
     private FirebaseAuth mAuth;
     private BottomNavigationView mBottomNavigationView;
@@ -82,6 +89,8 @@ public class DashboardActivity extends AppCompatActivity {
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.replace(R.id.content,fragment1,"");
         ft1.commit();
+
+        checkUserStatus();
     }
 
    @Override
@@ -97,10 +106,25 @@ public class DashboardActivity extends AppCompatActivity {
         finish();
     }
 
+//    public void updateToken (String token){
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+//        Token token = new Token(token);
+//        reference.child(mUID).setValue(mToken);
+//    }
+
     private void checkUserStatus(){
         FirebaseUser user = mAuth.getCurrentUser();
         if(user !=null){
             //mTvProfile.setText(user.getEmail());
+
+            mUID = user.getUid();
+
+//            SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
+//            SharedPreferences.Editor editor = sp.edit();
+//            editor.putString("Current_USERID", mUID);
+//            editor.apply();
+//
+//            updateToken(FirebaseInstanceId.getInstance().getToken());
         } else {
             //move to MainActivity if not logged in
             startActivity(new Intent(DashboardActivity.this, MainActivity.class));
