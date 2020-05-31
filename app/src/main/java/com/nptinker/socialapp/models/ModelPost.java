@@ -1,18 +1,19 @@
 package com.nptinker.socialapp.models;
 
 public class ModelPost {
-    private String pId, pTitle, pDescription, pImage, pTime, pLike, uid, uEmail, uDp, uName;
+    private String pId, pTitle, pDescription, pImage, pTime, pLike, pComments, uid, uEmail, uDp, uName;
 
     public ModelPost() {
     }
 
-    public ModelPost(String pId, String pTitle, String pDescription, String pImage, String pTime, String pLike, String uid, String uEmail, String uDp, String uName) {
+    public ModelPost(String pId, String pTitle, String pDescription, String pImage, String pTime, String pLike, String pComments, String uid, String uEmail, String uDp, String uName) {
         this.pId = pId;
         this.pTitle = pTitle;
         this.pDescription = pDescription;
         this.pImage = pImage;
         this.pTime = pTime;
         this.pLike = pLike;
+        this.pComments = pComments;
         this.uid = uid;
         this.uEmail = uEmail;
         this.uDp = uDp;
@@ -65,6 +66,14 @@ public class ModelPost {
 
     public void setpLike(String pLike) {
         this.pLike = pLike;
+    }
+
+    public String getpComments() {
+        return pComments;
+    }
+
+    public void setpComments(String pComments) {
+        this.pComments = pComments;
     }
 
     public String getUid() {

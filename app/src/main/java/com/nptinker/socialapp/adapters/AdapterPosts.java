@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nptinker.socialapp.AddPostActivity;
+import com.nptinker.socialapp.PostDetailActivity;
 import com.nptinker.socialapp.R;
 import com.nptinker.socialapp.TheirProfileActivity;
 import com.nptinker.socialapp.models.ModelPost;
@@ -86,6 +87,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         final String pImage = postList.get(position).getpImage();
         String pTimeStamp = postList.get(position).getpTime();
         final String pLike = postList.get(position).getpLike();
+        String pComments = postList.get(position).getpComments();
 
         //convert time
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
@@ -97,7 +99,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.tvPTime.setText(pTime);
         holder.tvPTitle.setText(pTitle);
         holder.tvPDescription.setText(pDescription);
-        holder.tvPLikes.setText(pLike + " Likes");
+        holder.tvPLikes.setText(pLike + " Like");
+        holder.tvPComments.setText(pComments + "Comment");
         //set like for each post
         setLikes(holder, pId);
 
@@ -165,7 +168,9 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                Intent intent = new Intent(context, PostDetailActivity.class);
+                intent.putExtra("postId", pId);
+                context.startActivity(intent);
             }
         });
 
@@ -204,7 +209,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
             }
         });
     }
@@ -216,6 +220,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             popupMenu.getMenu().add(Menu.NONE, 0, 0, "Delete");
             popupMenu.getMenu().add(Menu.NONE, 1, 0, "Edit");
         }
+        popupMenu.getMenu().add(Menu.NONE, 2, 0, "View detail");
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -229,6 +234,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                     Intent intent = new Intent(context, AddPostActivity.class);
                     intent.putExtra("key","editPost");
                     intent.putExtra("editPostId", pId);
+                    context.startActivity(intent);
+                } else if (id == 2) {
+                    //view detail
+                    Intent intent = new Intent(context, PostDetailActivity.class);
+                    intent.putExtra("postId", pId);
                     context.startActivity(intent);
                 }
                 return false;
@@ -302,7 +312,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder{
         ImageView ivUPicture, ivPImage;
-        TextView tvUName, tvPTime, tvPTitle, tvPDescription, tvPLikes;
+        TextView tvUName, tvPTime, tvPTitle, tvPDescription, tvPLikes, tvPComments;
         ImageButton btnMore;
         Button btnLike, btnComment, btnShare;
         LinearLayout layoutProfile;
@@ -317,6 +327,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             tvPTitle = itemView.findViewById(R.id.tv_p_title);
             tvPDescription = itemView.findViewById(R.id.tv_p_description);
             tvPLikes = itemView.findViewById(R.id.tv_p_likes);
+            tvPComments = itemView.findViewById(R.id.tv_p_comments);
             btnMore = itemView.findViewById(R.id.btn_more);
             btnLike = itemView.findViewById(R.id.btn_like);
             btnComment = itemView.findViewById(R.id.btn_comment);
