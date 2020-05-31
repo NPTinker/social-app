@@ -197,6 +197,7 @@ public class PostDetailActivity extends AppCompatActivity {
                         Toast.makeText(PostDetailActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+        finish();
     }
 
     private void deleteWithoutImage() {
@@ -216,6 +217,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
             }
         });
+        finish();
     }
 
     private void setLikes() {
