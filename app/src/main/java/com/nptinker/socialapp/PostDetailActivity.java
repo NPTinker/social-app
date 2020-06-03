@@ -160,8 +160,11 @@ public class PostDetailActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     ModelComment modelComment = ds.getValue(ModelComment.class);
                     commentList.add(modelComment);
+
+                    //pass myUid and postId as param for adapter constructor
+
                     //setup adapter
-                    adapterComments = new AdapterComments(getApplicationContext(),commentList);
+                    adapterComments = new AdapterComments(getApplicationContext(),commentList, myUid, postId);
                     recyclerView.setAdapter(adapterComments);
 
                 }
