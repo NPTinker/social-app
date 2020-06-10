@@ -29,6 +29,19 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
+
+        <!--Define file provider-->
+        <!--Set android:exported to false-->
+        <!--Set the android:grantUriPermission to true to allow access to file-->
+        <provider
+            android:authorities="com.nptinker.socialapp.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths"/>
+        </provider>
     </application>
 
 </manifest>
