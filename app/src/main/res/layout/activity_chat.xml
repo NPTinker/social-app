@@ -63,6 +63,13 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btn_attach"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:src="@drawable/ic_attach"/>
         
         <EditText
             android:id="@+id/et_message"
