@@ -147,10 +147,10 @@ public class ProfileFragment extends Fragment {
                     mTvPhone.setText(phone);
                     try {
                         //if image is received
-                        Picasso.get().load(image).into(mIvAvatar);
+                        Picasso.get().load(image).placeholder(R.drawable.ic_default_img).into(mIvAvatar);
                     } catch (Exception e){
                         //any exception = set default
-                        Picasso.get().load(R.drawable.ic_add_image).into(mIvAvatar);
+                        Picasso.get().load(R.drawable.ic_default_img).into(mIvAvatar);
                     }
                     try {
                         //if image is received

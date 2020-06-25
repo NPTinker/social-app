@@ -25,7 +25,8 @@
             android:id="@+id/iv_p_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@null"
+            android:src="@drawable/ic_image_black"
             android:minHeight="180dp"/>
 
         <EditText
