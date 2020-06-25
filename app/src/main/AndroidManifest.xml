@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name=".PostLikedByActivity"></activity>
+        <activity android:name=".PostDetailActivity" />
         <activity android:name=".TheirProfileActivity" />
         <activity android:name=".AddPostActivity" />
         <activity
@@ -28,19 +29,17 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-
-        <!--Define file provider-->
-        <!--Set android:exported to false-->
-        <!--Set the android:grantUriPermission to true to allow access to file-->
+        <activity android:name=".MainActivity" /> <!-- Define file provider -->
+        <!-- Set android:exported to false -->
+        <!-- Set the android:grantUriPermission to true to allow access to file -->
         <provider
-            android:authorities="com.nptinker.socialapp.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.nptinker.socialapp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths"/>
+                android:resource="@xml/paths" />
         </provider>
     </application>
 

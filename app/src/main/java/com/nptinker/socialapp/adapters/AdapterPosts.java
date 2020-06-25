@@ -39,6 +39,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nptinker.socialapp.AddPostActivity;
 import com.nptinker.socialapp.PostDetailActivity;
+import com.nptinker.socialapp.PostLikedByActivity;
 import com.nptinker.socialapp.R;
 import com.nptinker.socialapp.TheirProfileActivity;
 import com.nptinker.socialapp.models.ModelPost;
@@ -198,9 +199,17 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, ""+uid, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, TheirProfileActivity.class);
                 intent.putExtra("uid",uid);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.tvPLikes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PostLikedByActivity.class);
+                intent.putExtra("postId", pId);
                 context.startActivity(intent);
             }
         });
