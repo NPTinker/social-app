@@ -1,5 +1,6 @@
 package com.nptinker.socialapp.adapters;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -199,6 +200,8 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (context instanceof TheirProfileActivity)
+                    return;
                 Intent intent = new Intent(context, TheirProfileActivity.class);
                 intent.putExtra("uid",uid);
                 context.startActivity(intent);
@@ -214,6 +217,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             }
         });
     }
+
 
     private void shareImageAndText(String pTitle, String pDescription, Bitmap bitmap) {
         String shareBody = pTitle + "\n" + pDescription;
