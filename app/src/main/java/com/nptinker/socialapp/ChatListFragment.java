@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nptinker.socialapp.adapters.AdapterChatlist;
+import com.nptinker.socialapp.adapters.AdapterUser;
 import com.nptinker.socialapp.models.ModelChat;
 import com.nptinker.socialapp.models.ModelChatList;
 import com.nptinker.socialapp.models.ModelUser;
@@ -47,6 +48,7 @@ public class ChatListFragment extends Fragment {
     DatabaseReference reference;
     FirebaseUser currentUser;
     AdapterChatlist adapterChatlist;
+
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -171,12 +173,103 @@ public class ChatListFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    private void searchUser(final String query) {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //get all item name "Users" from db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                    //all searched users except current signin user
+                    if (!modelUser.getUid().equals(firebaseUser.getUid())){
+
+                        if (modelUser.getName().toLowerCase().contains(query.toLowerCase())
+                                || modelUser.getEmail().toLowerCase().contains(query.toLowerCase())){
+
+                            userList.add(modelUser);
+                        }
+                    }
+                    //adapter
+                    adapterChatlist = new AdapterChatlist(getActivity(),userList);
+                    //refresh adapter
+                    adapterChatlist.notifyDataSetChanged();
+                    recyclerView.setAdapter(adapterChatlist);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getAllUsers() {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //get all item name "Users" from db
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    ModelUser modelUser = ds.getValue(ModelUser.class);
+                    //except current signin user
+                    if (!modelUser.getUid().equals(firebaseUser.getUid())){
+                        userList.add(modelUser);
+                    }
+                    //adapter
+                    adapterChatlist = new AdapterChatlist(getActivity(),userList);
+                    recyclerView.setAdapter(adapterChatlist);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     //Inflate option menu
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
         //hide addpost icon
         menu.findItem(R.id.action_add_post).setVisible(false);
+
+        //Searchview
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //called when user press search button
+                //if search query not empty then search
+                if (!TextUtils.isEmpty(query.trim())){
+                    searchUser(query);
+                } else {
+                    //if empty, return all users
+                    getAllUsers();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (!TextUtils.isEmpty(newText.trim())){
+                    searchUser(newText);
+                } else {
+                    //if empty, return all users
+                    getAllUsers();
+                }
+                return false;
+            }
+        });
 
         super.onCreateOptionsMenu(menu, inflater);
     }

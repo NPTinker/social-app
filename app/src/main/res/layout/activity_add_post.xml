@@ -38,7 +38,8 @@
             android:gravity="start"
             android:inputType="textCapSentences|textMultiLine"
             android:minHeight="120dp"
-            android:background="@drawable/editextstyle"/>
+            android:background="@drawable/editextstyle"
+            android:adjustViewBounds="true"/>
 
         <Button
             android:id="@+id/btn_p_upload"
