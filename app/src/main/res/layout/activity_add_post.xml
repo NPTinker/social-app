@@ -24,11 +24,10 @@
         <ImageView
             android:id="@+id/iv_p_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:background="@null"
-            android:src="@drawable/ic_image_black"
-            android:minHeight="180dp"/>
-
+            android:src="@drawable/ic_add_image"
+            android:adjustViewBounds="true"/>
         <EditText
             android:id="@+id/et_p_description"
             android:layout_width="match_parent"
@@ -38,8 +37,7 @@
             android:gravity="start"
             android:inputType="textCapSentences|textMultiLine"
             android:minHeight="120dp"
-            android:background="@drawable/editextstyle"
-            android:adjustViewBounds="true"/>
+            android:background="@drawable/editextstyle" />
 
         <Button
             android:id="@+id/btn_p_upload"
