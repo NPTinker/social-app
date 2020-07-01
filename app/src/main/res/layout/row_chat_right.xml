@@ -47,7 +47,8 @@
             android:scaleType="fitCenter"
             android:background="@drawable/bg_sender"
             android:src="@drawable/ic_image_black"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="3dp"/>
 
 
 

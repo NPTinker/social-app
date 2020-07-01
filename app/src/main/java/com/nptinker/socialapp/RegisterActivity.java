@@ -91,12 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void registerUser(String email, String password) {
         //Create a new createAccount method which takes in an email address and password,
         //validates them and then creates a new user with the createUserWithEmailAndPassword method.
+        progressDialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "start creating user");
                         if (task.isSuccessful()) {
+
                             // Sign in success, dismiss dialog and start register activity
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
@@ -122,14 +124,14 @@ public class RegisterActivity extends AppCompatActivity {
                             //put data within hashmap in database
                             reference.child(uid).setValue(hashMap);
 
-
+                            progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "Successful Registration",
                                     Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
                             finish(); //end activity lifecycle
                         } else {
                             // If sign in fails, display a message to the user.
-                            //progressDialog.dismiss();
+                            progressDialog.dismiss();
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -138,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //progressDialog.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(RegisterActivity.this, ""+e.getMessage(),
                         Toast.LENGTH_SHORT).show();
             }

@@ -34,7 +34,8 @@
                 android:text="name"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginLeft="2dp"/>
             <!--Hold status-->
             <TextView
                 android:id="@+id/tv_user_status"
@@ -42,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:text="online"
                 android:textColor="@color/colorWhite"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:layout_marginLeft="2dp"/>
 
         </LinearLayout>
 

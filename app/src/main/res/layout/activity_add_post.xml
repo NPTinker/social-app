@@ -20,13 +20,17 @@
             android:hint="Enter title "
             android:singleLine="true"
             android:background="@drawable/editextstyle"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Click the space below to add image"/>
         
         <ImageView
             android:id="@+id/iv_p_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:background="@null"
-            android:src="@drawable/ic_add_image"
             android:adjustViewBounds="true"/>
         <EditText
             android:id="@+id/et_p_description"

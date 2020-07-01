@@ -170,6 +170,7 @@ public class AddPostActivity extends AppCompatActivity {
                 } else {
                     uploadData(title, description);
                 }
+                finish();
 
 //                if (image_uri == null) {
 //                    // w/o image
